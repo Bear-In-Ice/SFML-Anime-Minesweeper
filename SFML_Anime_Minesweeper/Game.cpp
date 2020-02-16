@@ -2,50 +2,77 @@
 //Constructor/Destructors
 Game::Game()
 {
-	this->initWindow();
+	this->InitWindow();
+}
+
+Game::~Game()
+{
+	delete state;
+	state = nullptr;
 }
 
 
 //Initialization
-void Game::initWindow() //initializes window
+void Game::InitWindow() //initializes window
 {
-	this->window.create(sf::VideoMode(this->window_width, this->window_height), "Minesweeper!", sf::Style::Titlebar);   //sf::Style::Titlebar:  Title bar + fixed border
+	this->window.create(sf::VideoMode(this->window_width, this->window_height), "Minesweeper", sf::Style::Titlebar);   //sf::Style::Titlebar:  Title bar + fixed border
 }
 
-//Functions 
-void Game::updateSFMLEvents()
+//Function
+void Game::Run()
 {
-	while (this->window.pollEvent(this->event))
-	{
-		if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
-			this->window.close();
-
-		if (event.type == sf::Event::Closed)
-			this->window.close();
-
-		if (event.type == sf::Event::MouseButtonPressed)
-		{
-
-		}
-	}
-}
-
-void Game::update()
-{
-	this->updateSFMLEvents();
-}
-
-void Game::render()
-{
-	this->window.clear();
-	field.draw_field(window);
-	this->window.display();
-}
-void Game::run()
-{
+	gameStates = GameStates::STATE_MENU;
 	while (this->window.isOpen())
 	{
-		this->update();
-		this->render();
+		switch (gameStates)
+		{
+		case GameStates::STATE_MENU:
+		{
+			this->state = new MenuState(this->resources);
+			if (this->state->Run(dt, &window, this->resources) == 2)
+			{
+				delete state;
+				gameStates = GameStates::STATE_LEVEL;
+			}
+			else
+				if (this->state->Run(dt, &window, this->resources) == 0)
+					this->window.close();
+				
+					
+		}
+		break;
+		case GameStates::STATE_LEVEL:
+		{
+			this->state = new LevelState(this->resources);
+			if (this->state->Run(dt, &window, this->resources) == 0)
+			{
+				delete state;
+				gameStates = GameStates::STATE_MENU;
+			}
+			else
+				if (this->state->Run(dt, &window, this->resources) == 1)
+				{
+					delete state;
+					gameStates = GameStates::STATE_GAME;
+					this->games_difficulty = 0;
+				}		
+		}
+			break;
+		case GameStates::STATE_GAME:
+		{
+			this->state = new GameState(this->resources,this->games_difficulty);
+			if (this->state->Run(dt, &window, this->resources) == 0)
+			{
+				delete state;
+				gameStates = GameStates::STATE_MENU;
+			}
+			else
+				if (this->state->Run(dt, &window, this->resources) == 1)
+					this->window.close();
+		}
+		break;
+		default:
+			break;
+		}
 	}
 }

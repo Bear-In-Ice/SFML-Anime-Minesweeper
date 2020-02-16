@@ -5,7 +5,17 @@
 #include <SFML/Window.hpp>
 
 #include "Resources.h" 
-#include "Field.h" 
+#include "MenuState.h"
+#include "LevelState.h"
+#include "GameState.h"
+
+enum class GameStates
+{
+	STATE_MENU = 0,
+	STATE_LEVEL = 1,
+	STATE_GAME = 2,
+	STATE_ENDGAME = 3
+};
 
 class Game
 {
@@ -14,26 +24,27 @@ private:
 	sf::RenderWindow window;
 	sf::Clock clock;
 	sf::Event event;
+	State* state;
 
 	const int window_width = 700;
 	const int window_height = 800;
-	const float dt = 1.0f / 60.0f;
+	float dt = 1.0f / 60.0f;   //Delta time
 
+
+	int games_difficulty;  // 0 - easy || 1 - medium || 2 - hard
+
+	GameStates gameStates;
 
 	Resources resources;
-	Field field{ 10,10,this->resources };
-
-public:
-
-	//Constructor
-	Game();
 
 	//Initialization
-	void initWindow();		//initializes window
+	void InitWindow();		//initializes window
+public:
 
-	//Functions 
-	void updateSFMLEvents();
-	void update();
-	void render();
-	void run();
+	//Constructors/Destructor
+	Game();
+	~Game();
+
+	//Function 
+	void Run();
 };

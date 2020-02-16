@@ -1,9 +1,9 @@
 #pragma once
 #include <map>
+#include <iterator>
+
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-
-
 class Resources
 {
 private:
@@ -13,10 +13,10 @@ private:
 	std::map<std::string, sf::Font> fonts;
 
 	//Function
-	void loadTexture(std::string path);
+	void LoadTexture(std::string path);
 
 public:
 	//Functions
-	std::map<std::string, sf::Sprite>::iterator loadSprite(std::string path/*, sf::IntRect rect*/); //загрузка спрайта, вовзращает итератор на спрайт в ассоциативном массиве, если его нет, то создает новый
-	std::map<std::string, sf::Font>::iterator loadFont(std::string path); //загрузка шрифта
+	std::map<std::string, sf::Sprite>::iterator LoadSprite(std::string path); 
+	std::map<std::string, sf::Font>::iterator LoadFont(std::string path); 
 };

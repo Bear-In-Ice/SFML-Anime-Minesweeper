@@ -1,6 +1,6 @@
 #include "Resources.h"
 //Functions
-void Resources::loadTexture(std::string path)
+void Resources::LoadTexture(std::string path)
 {
 	if (textures.find(path) == textures.end()) //if texture was not found - add it
 	{
@@ -10,19 +10,18 @@ void Resources::loadTexture(std::string path)
 	}
 }
 
-std::map<std::string, sf::Sprite>::iterator Resources::loadSprite(std::string path/*, sf::IntRect rect*/)
+std::map<std::string, sf::Sprite>::iterator Resources::LoadSprite(std::string path)
 {
 	if (sprites.find(path) == sprites.end()) //if sprite was not found - add it
 	{
-		loadTexture(path);
+		LoadTexture(path);
 		sprites.emplace(path, sf::Sprite(textures.find(path)->second));
-		//sprites[path].setTextureRect(rect);
 		sprites[path].setPosition(0, 0);
 	}
 	return sprites.find(path); //returns an iterator
 }
 
-std::map<std::string, sf::Font>::iterator Resources::loadFont(std::string path)
+std::map<std::string, sf::Font>::iterator Resources::LoadFont(std::string path)
 {
 	if (fonts.find(path) == fonts.end())//if font was not found - add it
 	{
