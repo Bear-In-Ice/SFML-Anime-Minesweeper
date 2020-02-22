@@ -16,9 +16,10 @@ private:
 	virtual void Init() = 0;
 	virtual void UpdateSFMLEvents(sf::RenderWindow* target) = 0;
 	virtual void Update(sf::RenderWindow* target, Resources& resources) = 0;
-	virtual void Render(float& dt, sf::RenderWindow* target, Resources& resources) = 0;
+	virtual void Render(sf::RenderWindow* target, Resources& resources) = 0;
 
 public:
 	virtual ~State() {};
-	virtual int Run( float& dt, sf::RenderWindow* target,Resources& resources) = 0;
+	virtual int Run( sf::RenderWindow* target,Resources& resources) = 0;
+	virtual int Get_lvl() = 0;
 };

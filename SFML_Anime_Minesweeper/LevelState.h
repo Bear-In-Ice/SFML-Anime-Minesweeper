@@ -7,10 +7,10 @@ class LevelState
 private:
 	//Variables
 	int flag_state;
+	int lvl;
 	float mouse_position_x;
 	float mouse_position_y;
 
-	sf::Clock* clock;
 	sf::Event* event;
 	sf::Vector2i* mouse_position;
 
@@ -22,12 +22,13 @@ private:
 	void Init() override;
 	void UpdateSFMLEvents(sf::RenderWindow* target) override;
 	void Update(sf::RenderWindow* target, Resources& resources) override;
-	void Render(float& dt, sf::RenderWindow* target, Resources& resources) override;
+	void Render( sf::RenderWindow* target, Resources& resources) override;
 
 public:
 	//Constructors/Destructor
 	LevelState(Resources& resources);
 	 ~LevelState();
 
-	int Run(float& dt, sf::RenderWindow* target, Resources& resources) override;
+	int Run(sf::RenderWindow* target, Resources& resources) override;
+	int Get_lvl() { return lvl; };
 };

@@ -9,10 +9,8 @@ MenuState::MenuState(Resources& resources)
 MenuState::~MenuState()
 {
 	delete event;
-	delete clock;
 	delete mouse_position;
 	event = nullptr;
-	clock = nullptr;
 	mouse_position = nullptr;
 }
 
@@ -20,7 +18,6 @@ MenuState::~MenuState()
 void MenuState::Init()
 {
 	event = new sf::Event;
-	clock = new sf::Clock;
 	mouse_position = new sf::Vector2i;
 
 	this->flag_state = 1;
@@ -64,7 +61,7 @@ void MenuState::Update(sf::RenderWindow* target, Resources& resources)
 
 }
 
-void MenuState::Render(float& dt, sf::RenderWindow* target, Resources& resources)
+void MenuState::Render(sf::RenderWindow* target, Resources& resources)
 {
 	target->clear();
 	target->draw((*sprite_iterator).second);
@@ -72,12 +69,12 @@ void MenuState::Render(float& dt, sf::RenderWindow* target, Resources& resources
 }
 
 
-int MenuState::Run(float& dt, sf::RenderWindow* target, Resources& resources)
+int MenuState::Run(sf::RenderWindow* target, Resources& resources)
 {
 	while (flag_state==1)
 	{
 		this->Update(target, resources);
-		this->Render(dt, target, resources);
+		this->Render(target, resources);
 	}
 	return flag_state;
 }

@@ -5,6 +5,7 @@ Field::Field(int fieldSize_x, int fieldSize_y, Resources& resources)
 	this->InitFieldSize(fieldSize_x, fieldSize_y);
 	this->InitFieldGrids();
 	this->numberMines = 0;
+	this->win_or_lose = 0;
 	sprite_iterator = resources.LoadSprite("images/tiles1.png");
 }
 
@@ -13,9 +14,9 @@ Field::~Field()
 	for (int i = 0; i < this->fieldSize_x; ++i) {
 		delete[] randomValueGrid[i];
 	}
-	
+
 	delete[] randomValueGrid;
-	
+
 
 	for (int i = 0; i < this->fieldSize_x; ++i) {
 		delete[] displayGrid[i];
@@ -61,6 +62,7 @@ void Field::Print_randomValueGrid()
 			std::cout << randomValueGrid[j][i];
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 void Field::Print_displayGrid()
@@ -106,7 +108,7 @@ void Field::Fill_randomValueGrid(int field_x, int field_y, int games_difficulty)
 		}
 		break;
 	case 1:
-		for (int i = 0; i < 20;)
+		for (int i = 0; i < 25;)
 		{
 			*random_x = rand() % this->fieldSize_x;
 			*random_y = rand() % this->fieldSize_y;
@@ -119,7 +121,7 @@ void Field::Fill_randomValueGrid(int field_x, int field_y, int games_difficulty)
 		}
 		break;
 	case 2:
-		for (int i = 0; i < 25;)
+		for (int i = 0; i < 35;)
 		{
 			*random_x = rand() % this->fieldSize_x;
 			*random_y = rand() % this->fieldSize_y;
@@ -134,22 +136,22 @@ void Field::Fill_randomValueGrid(int field_x, int field_y, int games_difficulty)
 	default:
 		break;
 	}
-	this->Print_randomValueGrid();
+
 
 	for (int i = 0; i < fieldSize_x; i++)
 		for (int j = 0; j < fieldSize_y; j++)
 		{
-			* temp_gridValue = 0;
+			*temp_gridValue = 0;
 			if (randomValueGrid[i][j] == 9) continue;
-			if ((i + 1) < fieldSize_x &&randomValueGrid[i + 1][j] == 9) *temp_gridValue += 1;
-			if ((j + 1) < fieldSize_y &&randomValueGrid[i][j + 1] == 9) *temp_gridValue += 1;
-			if ((i - 1) >= 0&&randomValueGrid[i - 1][j] == 9 )
+			if ((i + 1) < fieldSize_x && randomValueGrid[i + 1][j] == 9) *temp_gridValue += 1;
+			if ((j + 1) < fieldSize_y && randomValueGrid[i][j + 1] == 9) *temp_gridValue += 1;
+			if ((i - 1) >= 0 && randomValueGrid[i - 1][j] == 9)
 				*temp_gridValue += 1;
-			if ((j - 1) >= 0 &&randomValueGrid[i][j - 1] == 9) *temp_gridValue += 1;
-			if ((i + 1) < fieldSize_x && (j + 1) < fieldSize_y&&randomValueGrid[i + 1][j + 1] == 9 ) *temp_gridValue += 1;
-			if ((i - 1) >= 0 && (j - 1) >= 0&&randomValueGrid[i - 1][j - 1] == 9) *temp_gridValue += 1;
-			if ((i - 1) >= 0 && (j + 1) < fieldSize_y&&randomValueGrid[i - 1][j + 1] == 9 ) *temp_gridValue += 1;
-			if ((i + 1) < fieldSize_x && (j - 1) >= 0&&randomValueGrid[i + 1][j - 1] == 9) *temp_gridValue += 1;
+			if ((j - 1) >= 0 && randomValueGrid[i][j - 1] == 9) *temp_gridValue += 1;
+			if ((i + 1) < fieldSize_x && (j + 1) < fieldSize_y && randomValueGrid[i + 1][j + 1] == 9) *temp_gridValue += 1;
+			if ((i - 1) >= 0 && (j - 1) >= 0 && randomValueGrid[i - 1][j - 1] == 9) *temp_gridValue += 1;
+			if ((i - 1) >= 0 && (j + 1) < fieldSize_y && randomValueGrid[i - 1][j + 1] == 9) *temp_gridValue += 1;
+			if ((i + 1) < fieldSize_x && (j - 1) >= 0 && randomValueGrid[i + 1][j - 1] == 9) *temp_gridValue += 1;
 
 			randomValueGrid[i][j] = *temp_gridValue;
 		}
@@ -164,13 +166,40 @@ void Field::Fill_randomValueGrid(int field_x, int field_y, int games_difficulty)
 
 void Field::Ride(int field_x, int field_y)
 {
-	displayGrid[field_x][field_y] = randomValueGrid[field_x][field_y];
+	//this->Print_randomValueGrid();
+	if (displayGrid[field_x][field_y] != 11)
+		displayGrid[field_x][field_y] = randomValueGrid[field_x][field_y];
 
 	if (displayGrid[field_x][field_y] == 9)
+	{
+		win_or_lose = 2;
 		for (int i = 0; i < this->fieldSize_x; i++)
 			for (int j = 0; j < this->fieldSize_y; j++)
 				displayGrid[i][j] = randomValueGrid[i][j];
+	}
+	else
+		if (displayGrid[field_x][field_y] == 0)
+			Empty_square(field_x, field_y);
+
 }
+
+void Field::Empty_square(int field_x, int field_y)
+{
+	if (randomValueGrid[field_x][field_y] == 0)
+	{
+		displayGrid[field_x][field_y] = 0;
+		if (field_x + 1 > fieldSize_x)
+			Empty_square(field_x + 1, field_y);
+		if (field_x - 1 < 0)
+			Empty_square(field_x - 1, field_y);
+
+		if (field_y + 1 > fieldSize_y)
+			Empty_square(field_x, field_y + 1);
+		if (field_y - 1 < 0)
+			Empty_square(field_x, field_y - 1);
+	}
+}
+
 
 void Field::Set_flag(int field_x, int field_y)
 {
@@ -180,21 +209,23 @@ void Field::Set_flag(int field_x, int field_y)
 		displayGrid[field_x][field_y] = 10;
 	}
 	else
-	{
-		this->numberMines -= 1;
-		displayGrid[field_x][field_y] = 11;
-	}
-
+		if (displayGrid[field_x][field_y] == 10)
+		{
+			this->numberMines -= 1;
+			displayGrid[field_x][field_y] = 11;
+		}
 }
 
-bool Field::CheckWin()
+void Field::CheckWin()
 {
-
-	for (int i = 0; i < fieldSize_y; i++) {
-		for (int j = 0; j < fieldSize_x; j++)
-			if (displayGrid[i][j] != randomValueGrid[i][j])
-				return false;
+	for (int i = 0; i < fieldSize_x; i++)
+	{
+		for (int j = 0; j < fieldSize_y; j++)
+			if (randomValueGrid[i][j] != 9 && displayGrid[i][j] != randomValueGrid[i][j])
+			{
+				win_or_lose = 0;
+				return;
+			}
 	}
-
-	return 0;
+	win_or_lose = 1;
 }

@@ -17,28 +17,33 @@ private:
 	int** randomValueGrid;			//for operations related to the game
 	int** displayGrid;				//to display
 	int numberMines;
-	
+	int win_or_lose;                //1 - win,2-lose
+
 	//SFML Sprite and Texture
 	std::map<std::string, sf::Sprite>::iterator sprite_iterator;
-	
+
 	//Initialization
 	void InitFieldSize(int fieldSize_x, int fieldSize_y);   //initializes field size
 	void InitFieldGrids();                                  //initializes the values in the "grids"
-	
+
 public:
 
 	//Constructors/Destructor
-	Field(int fieldSize_x, int fieldSize_y, Resources & resources);
+	Field(int fieldSize_x, int fieldSize_y, Resources& resources);
 	~Field();
 
 	//Functions
-	bool CheckWin();
+	void CheckWin();
 	void Print_randomValueGrid();
 	void Print_displayGrid();
 	void Draw_field(sf::RenderWindow* target); //SFML window rendering
 	void Fill_randomValueGrid(int field_x, int field_y, int games_difficulty);
 	void Ride(int field_x, int field_y);
+	void Empty_square( int field_x, int field_y);
+	
+
 	void Set_flag(int field_x, int field_y);
 	int Get_fieldSize_x() { return this->fieldSize_x; }
 	int Get_fieldSize_y() { return this->fieldSize_y; }
+	int Get_win_or_lose() { return this->win_or_lose; }
 };

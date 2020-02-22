@@ -9,10 +9,8 @@ LevelState::LevelState(Resources& resources)
 LevelState::~LevelState()
 {
 	delete event;
-	delete clock;
 	delete mouse_position;
 	event = nullptr;
-	clock = nullptr;
 	mouse_position = nullptr;
 }
 
@@ -20,7 +18,6 @@ LevelState::~LevelState()
 void LevelState::Init()
 {
 	event = new sf::Event;
-	clock = new sf::Clock;
 	mouse_position = new sf::Vector2i;
 
 	this->flag_state = 5;
@@ -36,22 +33,41 @@ void LevelState::UpdateSFMLEvents(sf::RenderWindow* target)
 			if (event->key.code == sf::Mouse::Left)
 			{
 				if (mouse_position_x > 2.8 && mouse_position_x < 3.8 && mouse_position_y >7.4 && mouse_position_y < 8.38)
+				{
+					lvl = 1;
 					flag_state = 1;
+				}
 				else
 					if (mouse_position_x > 4.9 && mouse_position_x < 5.8 && mouse_position_y >7.4 && mouse_position_y < 8.38)
+					{
+						lvl = 2;
 						flag_state = 1;
+					}
 					else
 						if (mouse_position_x > 6.9 && mouse_position_x < 7.9 && mouse_position_y >7.4 && mouse_position_y < 8.38)
+						{
+							lvl = 3;
 							flag_state = 1;
+						}
 						else
-							if (mouse_position_x > 0.91 && mouse_position_x < 1.23 && mouse_position_y >9 && mouse_position_y < 9.96)
+							if (mouse_position_x > 2.8 && mouse_position_x < 3.8 && mouse_position_y >8.9 && mouse_position_y < 9.9)
+							{
+								lvl = 4;
 								flag_state = 2;
+							}
 							else
-								if (mouse_position_x > 1.59 && mouse_position_x < 1.91 && mouse_position_y >9 && mouse_position_y < 9.96)
+								if (mouse_position_x > 4.9 && mouse_position_x < 5.8 && mouse_position_y >8.9 && mouse_position_y < 9.9)
+								{
+									lvl = 5;
 									flag_state = 2;
+								}
 								else
-									if (mouse_position_x > 2.26 && mouse_position_x < 2.58 && mouse_position_y >9 && mouse_position_y < 9.96)
+									if (mouse_position_x > 6.9 && mouse_position_x < 7.9 && mouse_position_y >8.9 && mouse_position_y < 9.9)
+									{
+										lvl = 6;
 										flag_state = 2;
+									}
+									
 			}
 	}
 }
@@ -62,8 +78,8 @@ void LevelState::Update(sf::RenderWindow* target, Resources& resources)
 	mouse_position_x = ((float)mouse_position->x / 63); //63 - button width
 	mouse_position_y = ((float)mouse_position->y / 65);	 //65 - button height
 
-	system("cls");
-	std::cout << mouse_position_x << "||" << mouse_position_y;
+	/*system("cls");
+	std::cout << mouse_position_x << "||" << mouse_position_y;*/
 
 	if (mouse_position_x > 2.8 && mouse_position_x < 3.8 && mouse_position_y >7.4 && mouse_position_y < 8.38)
 		sprite_iterator = resources.LoadSprite("images/bc5.png");
@@ -88,7 +104,7 @@ void LevelState::Update(sf::RenderWindow* target, Resources& resources)
 	this->UpdateSFMLEvents(target);
 }
 
-void LevelState::Render(float& dt, sf::RenderWindow* target, Resources& resources)
+void LevelState::Render(sf::RenderWindow* target, Resources& resources)
 {
 	target->clear();
 	target->draw((*sprite_iterator).second);
@@ -96,12 +112,12 @@ void LevelState::Render(float& dt, sf::RenderWindow* target, Resources& resource
 }
 
 
-int LevelState::Run(float& dt, sf::RenderWindow* target, Resources& resources)
+int LevelState::Run(sf::RenderWindow* target, Resources& resources)
 {
 	while (flag_state==5)
 	{
 		this->Update(target, resources);
-		this->Render(dt, target, resources);
+		this->Render(target, resources);
 	}
 	return flag_state;
 }

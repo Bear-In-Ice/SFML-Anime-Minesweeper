@@ -28,13 +28,12 @@ private:
 
 	const int window_width = 700;
 	const int window_height = 800;
-	float dt = 1.0f / 60.0f;   //Delta time
 
 
 	int games_difficulty;  // 0 - easy || 1 - medium || 2 - hard
+	int lvl;
 
 	GameStates gameStates;
-
 	Resources resources;
 
 	//Initialization
