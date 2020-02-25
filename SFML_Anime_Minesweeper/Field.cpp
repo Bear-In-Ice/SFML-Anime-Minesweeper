@@ -95,7 +95,7 @@ void Field::Fill_randomValueGrid(int field_x, int field_y, int games_difficulty)
 	switch (games_difficulty)
 	{
 	case 0:
-		for (int i = 0; i < 15;)
+		for (int i = 0; i < 20;)
 		{
 			*random_x = rand() % fieldSize_x;
 			*random_y = rand() % fieldSize_y;
@@ -166,9 +166,11 @@ void Field::Fill_randomValueGrid(int field_x, int field_y, int games_difficulty)
 
 void Field::Ride(int field_x, int field_y)
 {
-	//this->Print_randomValueGrid();
-	if (displayGrid[field_x][field_y] != 11)
-		displayGrid[field_x][field_y] = randomValueGrid[field_x][field_y];
+	if (randomValueGrid[field_x][field_y] == 0)
+		Empty_square(field_x, field_y);
+	else
+		if (displayGrid[field_x][field_y] != 11)
+			displayGrid[field_x][field_y] = randomValueGrid[field_x][field_y];
 
 	if (displayGrid[field_x][field_y] == 9)
 	{
@@ -177,25 +179,50 @@ void Field::Ride(int field_x, int field_y)
 			for (int j = 0; j < this->fieldSize_y; j++)
 				displayGrid[i][j] = randomValueGrid[i][j];
 	}
-	else
-		if (displayGrid[field_x][field_y] == 0)
-			Empty_square(field_x, field_y);
 
 }
 
 void Field::Empty_square(int field_x, int field_y)
 {
+	if (displayGrid[field_x][field_y] == 0)
+	{
+		if (field_x + 1 < fieldSize_x && displayGrid[field_x + 1][field_y] != 0)
+			displayGrid[field_x + 1][field_y] = randomValueGrid[field_x + 1][field_y];
+
+		if (field_x - 1 >= 0 && displayGrid[field_x - 1][field_y] != 0)
+			displayGrid[field_x - 1][field_y] = randomValueGrid[field_x - 1][field_y];
+
+		if (field_y + 1 < fieldSize_y && displayGrid[field_x][field_y + 1] != 0)
+			displayGrid[field_x][field_y + 1] = randomValueGrid[field_x][field_y + 1];
+
+		if (field_y - 1 >= 0 && displayGrid[field_x][field_y - 1] != 0)
+			displayGrid[field_x][field_y - 1] = randomValueGrid[field_x][field_y - 1];
+
+		if (field_x - 1 >= 0 && field_y - 1 >= 0 && displayGrid[field_x - 1][field_y - 1] != 0)
+			displayGrid[field_x - 1][field_y - 1] = randomValueGrid[field_x - 1][field_y - 1];
+
+		if (field_x + 1 < fieldSize_x && field_y + 1 < fieldSize_y && displayGrid[field_x + 1][field_y + 1] != 0)
+			displayGrid[field_x + 1][field_y + 1] = randomValueGrid[field_x + 1][field_y + 1];
+
+		if (field_x - 1 >= 0 && field_y + 1 < fieldSize_y && displayGrid[field_x - 1][field_y + 1] != 0)
+			displayGrid[field_x - 1][field_y + 1] = randomValueGrid[field_x - 1][field_y + 1];
+
+		if (field_x + 1 < fieldSize_x && field_y - 1 >= 0 && displayGrid[field_x + 1][field_y - 1] != 0)
+			displayGrid[field_x + 1][field_y - 1] = randomValueGrid[field_x + 1][field_y - 1];
+
+		return;
+	}
+
 	if (randomValueGrid[field_x][field_y] == 0)
 	{
 		displayGrid[field_x][field_y] = 0;
-		if (field_x + 1 > fieldSize_x)
+		if (field_x + 1 < fieldSize_x)
 			Empty_square(field_x + 1, field_y);
-		if (field_x - 1 < 0)
+		if (field_x - 1 >= 0)
 			Empty_square(field_x - 1, field_y);
-
-		if (field_y + 1 > fieldSize_y)
+		if (field_y + 1 < fieldSize_y)
 			Empty_square(field_x, field_y + 1);
-		if (field_y - 1 < 0)
+		if (field_y - 1 >= 0)
 			Empty_square(field_x, field_y - 1);
 	}
 }

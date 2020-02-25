@@ -3,31 +3,31 @@
   <Class Name="Game">
     <Position X="0.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAJAgAAAAAAACACAAAAAAAAAAgAAAIcAAQCAAAAAAA=</HashCode>
+      <HashCode>AAAJAAAAAAIAACAAAAABAAAAAAiAAAIcAAACAAAAAAM=</HashCode>
       <FileName>Game.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Field">
     <Position X="2.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAABABABCAABCAAARAAAABAAgAA=</HashCode>
+      <HashCode>EQABAABAAABEABAAAAABABABGEABCAAAwCAAAAACiAA=</HashCode>
       <FileName>Field.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Resources">
     <Position X="2.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABEAAAAAAAAAAAAAAAAAABAAAAAAACACQAAA=</HashCode>
+      <HashCode>AAAEAAAAAEAAAAAAAAAAAAAEAAAAAAAAAAAAAACQAAg=</HashCode>
       <FileName>Resources.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GameState">
-    <Position X="8.5" Y="3" Width="1.5" />
+    <Position X="9" Y="0.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AACCAwAAAAAABgAAAAAAAAAAAAgAEAIAQAACAAQUIAA=</HashCode>
+      <HashCode>EASDAQAAEAAABgAAEAABAAAAAAgAAAoIYBACEAAAIgI=</HashCode>
       <FileName>GameState.h</FileName>
       <NewMemberFileName>MenuState.h</NewMemberFileName>
     </TypeIdentifier>
@@ -35,27 +35,27 @@
   <Class Name="State">
     <Position X="7" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAAAQUAAA=</HashCode>
+      <HashCode>AAQAAAAAEAAAAAAAAAAAAAAAAAAAAAgAABACABAAAAI=</HashCode>
       <FileName>State.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LevelState">
-    <Position X="7" Y="3" Width="1.5" />
+    <Position X="7" Y="3.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAwAAAAAABgAAAAAAAAAAAAAEEAIAQAACCAQUAAA=</HashCode>
+      <HashCode>AAQCAQAAEAAABgAAAAAAAAAAAAAEAAoAQBACCAAAAAM=</HashCode>
       <FileName>LevelState.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MenuState">
-    <Position X="5.5" Y="3" Width="1.5" />
+    <Position X="5" Y="0.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAADAwAAAAAABgAAAgAAAAAAAAAAEAIAQAACAAQUAAA=</HashCode>
+      <HashCode>AAQDAQAAEAAABgAAAgAAAAAAAAAAAAoAQBACAAAAAAI=</HashCode>
       <FileName>MenuState.h</FileName>
     </TypeIdentifier>
   </Class>
